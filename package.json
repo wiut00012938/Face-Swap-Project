@@ -1,0 +1,24 @@
+{
+  "name": "face-swap-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiut00012938/Face-Swap-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wiut00012938/Face-Swap-Project/issues"
+  },
+  "homepage": "https://github.com/wiut00012938/Face-Swap-Project#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pug": "^3.0.2",
+    "replicate": "^0.25.2"
+  }
+}
