@@ -8,14 +8,26 @@ html(lang='en')
   body
     h1 Face Swap App
     #targetImagesContainer
-      img.thumbnail(src='/static/images/target1.jpg', alt='Image 1', onclick="selectImage('/static/images/target1.jpg')")
-      img.thumbnail(src='/static/images/target2.webp', alt='Image 2', onclick="selectImage('/static/images/target2.wepb')")
-      img.thumbnail(src='/static/images/target3.jpg', alt='Image 3', onclick="selectImage('/static/images/target3.jpg')")
-      img.thumbnail(src='/static/images/target4.jpg', alt='Image 4', onclick="selectImage('/static/images/target4.jpg')")
-      img.thumbnail(src='/static/images/target5.jpg', alt='Image 5', onclick="selectImage('/static/images/target5.jpg')")
-      img.thumbnail(src='/static/images/target6.jpg', alt='Image 6', onclick="selectImage('/static/images/target6.jpg')")
-    label(for='userImageInput') Upload Your Image:
-    input#userImageInput(type='file', accept='image/*')
+      img.thumbnail(src='/static/images/target1.jpg', alt='Image 1', onclick="selectImage('/static/images/target1.jpg', 'Image 1')")
+      img.thumbnail(src='/static/images/target2.webp', alt='Image 2', onclick="selectImage('/static/images/target2.wepb','Image 2')")
+      img.thumbnail(src='/static/images/target3.jpg', alt='Image 3', onclick="selectImage('/static/images/target3.jpg','Image 3')")
+      img.thumbnail(src='/static/images/target4.jpg', alt='Image 4', onclick="selectImage('/static/images/target4.jpg','Image 4')")
+      img.thumbnail(src='/static/images/target5.jpg', alt='Image 5', onclick="selectImage('/static/images/target5.jpg','Image 5')")
+      img.thumbnail(src='/static/images/target6.jpg', alt='Image 6', onclick="selectImage('/static/images/target6.jpg','Image 6')")
+    //button#playBtn Play stream
+    //button#stopBtn Stop stream
+    //button#captureBtn Capture
+    //<canvas id="canvas"></canvas> <video id="player" autoplay></video>
+    .contentarea
+      .camera
+        video#video Video stream not available.
+      div
+        button#playBtn Open a camera
+        button#startbutton Take photo
+        span#countdown
+      canvas#canvas
+      .output
+        img#photo(alt='The screen capture will appear in this box.')
     button(onclick='performFaceSwap()') Swap Faces
     img#resultImage(alt='Swapped Image')
     script(src='/static/javascripts/index.js')
