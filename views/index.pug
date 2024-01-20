@@ -28,6 +28,7 @@ html(lang='en')
       canvas#canvas
       .output
         img#photo(alt='The screen capture will appear in this box.')
-    button(onclick='performFaceSwap()') Swap Faces
+    button#generateButton Swap Faces
     img#resultImage(alt='Swapped Image')
     script(src='/static/javascripts/index.js')
+    script(src='/static/javascripts/imageGenerator.js')

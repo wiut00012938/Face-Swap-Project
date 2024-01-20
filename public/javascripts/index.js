@@ -1,67 +1,3 @@
-/*const playBtn = document.getElementById('playBtn');
-
-const stopBtn = document.getElementById('stopBtn');
-
-const capture = document.getElementById('captureBtn');
-
-const player = document.getElementById('player');
-
-const canvas = document.getElementById('canvas');
-
-const context = canvas.getContext('2d');
-
-
-let stream;
-
-
-playBtn.addEventListener('click', () => {
-
-	navigator.mediaDevices
-
-		.getUserMedia({video: true})
-
-		.then(mediaStream => {
-
-			player.srcObject = mediaStream;
-
-			stream = mediaStream;
-
-		});
-
-});
-
-
-stopBtn.addEventListener('click', () => {
-
-	stream.getTracks().forEach(track => track.stop());
-
-});
-
-
-capture.addEventListener('click', () => {
-
-	const track = stream.getVideoTracks()[0];
-
-	let imageCapture = new ImageCapture(track);
-
-	imageCapture.takePhoto()
-
-		.then(blob => {
-
-			const img = new Image();
-
-			img.src = URL.createObjectURL(blob);
-
-			img.onload = () => {
-
-				context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-				URL.revokeObjectURL(img.src);
-
-			};
-
-		});
-    })*/
 
 (function() {
 	var width = 320;
@@ -165,7 +101,7 @@ capture.addEventListener('click', () => {
 	playBtn.addEventListener('click', startup, false);
 })();
 
-
+// Select Target Image from provided
 var Target_Image = null;
 function selectImage(newLink, alt) {
 var thumbnails = document.querySelectorAll('.thumbnail');
@@ -177,8 +113,29 @@ var clickedImage = event.target;
 clickedImage.classList.add('selected-target');
 
 Target_Image = newLink;
-console.log('New link:', newLink);
+console.log('New link:', 'http://localhost:3000' + newLink);
 }
 
 
+//calling image generator
+document.getElementById("generateButton").addEventListener("click", async () => {
+	const SwapImage = "https://static.tvtropes.org/pmwiki/pub/images/daemon_hotd4.png"
+	const targetImage = "https://www.looper.com/img/gallery/why-house-of-the-dragons-king-viserys-targaryen-looks-so-familiar/l-intro-1661180672.jpg"
+	await fetch("/setImages", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({swap: SwapImage, target: targetImage}),
+	});
 
+	await fetch("/generateImage");
+	
+	await new Promise(resolve => setTimeout(resolve, 5000));
+
+	const response = await fetch("/getGeneratedImageUrl");
+	const generatedImageUrl = await response.json();
+
+	document.getElementById("resultImage").src = generatedImageUrl;
+
+})
