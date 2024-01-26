@@ -158,9 +158,9 @@ console.log('New link:', 'https://book-club-2og7.onrender.com/static/images/' + 
 
 //calling image generator
 document.getElementById("generateButton").addEventListener("click", async () => {
-	const SwapImage = "https://book-club-2og7.onrender.com/static/images/" + Target_Image
+	const SwapImage = document.getElementById('photo').src
 	//const targetImage = document.getElementById('photo').src
-	const targetImage = "https://book-club-2og7.onrender.com/static/images/target1.jpg"
+	const targetImage = "https://book-club-2og7.onrender.com/static/images/" + Target_Image
 	await fetch("/setImages", {
 		method: "POST",
 		headers: {
