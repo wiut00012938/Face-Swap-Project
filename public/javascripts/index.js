@@ -82,6 +82,21 @@
 		updateCountdown();
 	}
 
+	/*function takepicture() 
+	{
+		var context = canvas.getContext('2d');
+		if (width && height) {
+			canvas.width = width;
+			canvas.height = height;
+			context.drawImage(video, 0, 0, width, height);
+
+			var data = canvas.toDataURL('image/png');
+			photo.setAttribute('src', data);
+		} else {
+			clearphoto();
+		}
+	}*/
+	
 	function takepicture() {
 		var context = canvas.getContext('2d');
 		if (width && height) {
@@ -89,32 +104,27 @@
 			canvas.height = height;
 			context.drawImage(video, 0, 0, width, height);
 	
-			var imageData = canvas.toDataURL('image/png');
-			var blob = dataURItoBlob(imageData);
+			// Convert the canvas data to a Blob
+			canvas.toBlob(blob => {
+				// Create a FormData object
+				var formData = new FormData();
+				formData.append('image', blob, 'image.png');
 	
-			// Create a temporary URL for the Blob
-			var imageUrl = URL.createObjectURL(blob);
-	
-			// Set the temporary URL as the src attribute of the img element
-			var imgElement = document.getElementById('photo'); // Replace 'yourImgElementId' with the actual ID of your <img> element
-			imgElement.src = imageUrl;
-	
-			// Now you can use imageUrl for other operations
-			console.log('Image URL:', imageUrl);
+				// Make an HTTP POST request to the server to handle the file upload
+				fetch('/upload', {
+					method: 'POST',
+					body: formData,
+				})
+					.then(response => response.json())
+					.then(data => {
+						// Update the 'src' attribute of the 'photo' element with the saved image path
+						photo.setAttribute('src', data.imagePath);
+					})
+					.catch(error => console.error('Error:', error));
+			}, 'image/png');
 		} else {
 			clearphoto();
 		}
-	}
-	
-	// Helper function to convert data URI to Blob
-	function dataURItoBlob(dataURI) {
-		var byteString = atob(dataURI.split(',')[1]);
-		var ab = new ArrayBuffer(byteString.length);
-		var ia = new Uint8Array(ab);
-		for (var i = 0; i < byteString.length; i++) {
-			ia[i] = byteString.charCodeAt(i);
-		}
-		return new Blob([ab], { type: 'image/png' });
 	}
 	
 	
@@ -159,7 +169,7 @@ console.log('New link:', 'https://book-club-2og7.onrender.com/static/images/' + 
 //calling image generator
 document.getElementById("generateButton").addEventListener("click", async () => {
 	const SwapImage = document.getElementById('photo').src
-	//const targetImage = document.getElementById('photo').src
+	console.log(SwapImage)
 	const targetImage = "https://book-club-2og7.onrender.com/static/images/" + Target_Image
 	await fetch("/setImages", {
 		method: "POST",

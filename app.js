@@ -86,3 +86,19 @@ export async function generateImage(){
         console.error("error generating image:", error);
     }
 }
+
+import multer from 'multer'
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.post('/upload', upload.single('image'), (req, res) => {
+  // Handle image upload and save it to the 'static/images' directory
+  const imageDataBuffer = req.file.buffer;
+  const photoName = 'photo_' + Date.now() + '_' + Math.floor(Math.random() * 1000) + '.png';
+  const filePath = path.join(__dirname, 'public', 'images', photoName);
+
+  // Write the buffer to the file
+  fs.writeFileSync(filePath, imageDataBuffer);
+
+  res.json({ success: true, imagePath: `/static/images/${photoName}` });
+});
