@@ -82,24 +82,63 @@
 		updateCountdown();
 	}
 
-	function takepicture() 
-	{
+	function takepicture() {
 		var context = canvas.getContext('2d');
 		if (width && height) {
 			canvas.width = width;
 			canvas.height = height;
 			context.drawImage(video, 0, 0, width, height);
-
-			var data = canvas.toDataURL('image/png');
-			photo.setAttribute('src', data);
+	
+			var imageData = canvas.toDataURL('image/png');
+			var blob = dataURItoBlob(imageData);
+	
+			// Create a temporary URL for the Blob
+			var imageUrl = URL.createObjectURL(blob);
+	
+			// Set the temporary URL as the src attribute of the img element
+			var imgElement = document.getElementById('photo'); // Replace 'yourImgElementId' with the actual ID of your <img> element
+			imgElement.src = imageUrl;
+	
+			// Now you can use imageUrl for other operations
+			console.log('Image URL:', imageUrl);
 		} else {
 			clearphoto();
 		}
 	}
+	
+	// Helper function to convert data URI to Blob
+	function dataURItoBlob(dataURI) {
+		var byteString = atob(dataURI.split(',')[1]);
+		var ab = new ArrayBuffer(byteString.length);
+		var ia = new Uint8Array(ab);
+		for (var i = 0; i < byteString.length; i++) {
+			ia[i] = byteString.charCodeAt(i);
+		}
+		return new Blob([ab], { type: 'image/png' });
+	}
+	
+	
+	
+	
 
 	//window.addEventListener('load', startup, false);
 	playBtn.addEventListener('click', startup, false);
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Select Target Image from provided
 var Target_Image = null;
@@ -113,14 +152,15 @@ var clickedImage = event.target;
 clickedImage.classList.add('selected-target');
 
 Target_Image = newLink;
-console.log('New link:', 'http://localhost:3000' + newLink);
+console.log('New link:', 'https://book-club-2og7.onrender.com/static/images/' + newLink);
 }
 
 
 //calling image generator
 document.getElementById("generateButton").addEventListener("click", async () => {
-	const SwapImage = "https://static.tvtropes.org/pmwiki/pub/images/daemon_hotd4.png"
-	const targetImage = "https://www.looper.com/img/gallery/why-house-of-the-dragons-king-viserys-targaryen-looks-so-familiar/l-intro-1661180672.jpg"
+	const SwapImage = "https://book-club-2og7.onrender.com/static/images/" + Target_Image
+	//const targetImage = document.getElementById('photo').src
+	const targetImage = "https://book-club-2og7.onrender.com/static/images/target1.jpg"
 	await fetch("/setImages", {
 		method: "POST",
 		headers: {
