@@ -186,7 +186,12 @@ document.getElementById("generateButton").addEventListener("click", async () => 
 	const response = await fetch("/getGeneratedImageUrl");
 	const generatedImageUrl = await response.json();
 
-	document.getElementById("resultImage").src = generatedImageUrl;
+	if (generatedImageUrl){
+		document.getElementById("resultImage").src = generatedImageUrl;
+	}
+	else{
+		window.alert("Swap and target images are required.")
+	}
 
 })
 
