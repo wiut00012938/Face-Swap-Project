@@ -3,28 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../public/styles//index.css">
+  <link rel="stylesheet" href="../public/styles/index.css">
   <title>Face Swap App</title>
 </head>
 <body>
-    <h1>Face Swap App</h1>
-  
-    <div id="targetImagesContainer">
-        <img src="../public/images/target1.jpg" alt="Image 1" class="thumbnail" onclick="selectImage('target1.jpg')">
-        <img src="../public/images/target2.webp" alt="Image 2" class="thumbnail" onclick="selectImage('target2.wepb')">
-        <img src="../public/images/target3.jpg" alt="Image 3" class="thumbnail" onclick="selectImage('target3.jpg')">
-        <img src="../public/images/target4.jpg" alt="Image 4" class="thumbnail" onclick="selectImage('target4.jpg')">
-        <img src="../public/images/target5.jpg" alt="Image 5" class="thumbnail" onclick="selectImage('target5.jpg')">
-        <img src="../public/images/target6.jpg" alt="Image 6" class="thumbnail" onclick="selectImage('target6.jpg')">
+  <div class="container">
+    <section class="one">
+      <video autoplay loop muted plays-inline class="back-desktop">
+        <source src="../public/images/intro_desktop.mp4" type="video/mp4">
+      </video>
+      <nav>
+        <a href="ggi-uzbekistan.onrender.com"><img src="../public/images/team_logo_black.png" alt="team_logo"></a>
+        <a href="https://lrc.wiut.uz/readingClub/Index">Book Club</a>
+      </nav>
+      <div class="intro_text">
+        <p class="text1">Face Swap App</p>
+        <p class="text2">Get the image of yourself as one of the characters</p>
       </div>
-    
-      <label for="userImageInput">Upload Your Image:</label>
-      <input type="file" accept="image/*" id="userImageInput">
-    
-      <button onclick="performFaceSwap()">Swap Faces</button>
-    
-      <img id="resultImage" alt="Swapped Image">
+      <dotlottie-player src="https://lottie.host/ba082b39-8732-4d1a-8ccc-824b0af4bdbe/PFl4cwm6mL.json" background="transparent" speed="1" style="width: 10rem; height: 10rem; padding-bottom: 2px;" loop autoplay></dotlottie-player>
+    </section>
+    <section class="two">
+      <h1>Choose The Character for Swap</h1>
+      <div class="target-image_options">
+        <img src="../public/images/target1.jpg" alt="image1", class = "selected-target",class = "thumbnail",onclick="selectImage('target1.jpg', 'Image 1')" >
+        <img src="../public/images/target2.jpg" alt="image2", class = "thumbnail",onclick="selectImage('target2.jpg', 'Image 2')" >
+        <img src="../public/images/target3.jpg" alt="image3", class = "thumbnail",onclick="selectImage('target3.jpg', 'Image 3')" >
+        <img src="../public/images/target4.jpg" alt="image4", class = "thumbnail",onclick="selectImage('target4.jpg', 'Image 4')" >
+        <img src="../public/images/target5.jpg" alt="image5", class = "thumbnail",onclick="selectImage('target5.jpg', 'Image 5')" >
+        <img src="../public/images/target6.jpg" alt="image6", class = "thumbnail",onclick="selectImage('target6.jpg', 'Image 6')" >
+        <img src="../public/images/target7.jpg" alt="image7", class = "thumbnail",onclick="selectImage('target7.pg', 'Image 7')" >
+        <img src="../public/images/target8.jpg" alt="image8", class = "thumbnail",onclick="selectImage('target8.jpg', 'Image 8')" >
+        <img src="../public/images/target9.jpg" alt="image9", class = "thumbnail",onclick="selectImage('target9.jpg', 'Image 9')" >
+        <img src="../public/images/target10.jpg" alt="image10", class = "thumbnail",onclick="selectImage('target10.jpg', 'Image 10')" >
+        <img src="../public/images/target11.jpg" alt="image11", class = "thumbnail",onclick="selectImage('target11.jpg', 'Image 11')" >
+        <img src="../public/images/target12.jpg" alt="image12", class = "thumbnail",onclick="selectImage('target12.jpg', 'Image 12')" >
+        <img src="../public/images/target13.jpg" alt="image13", class = "thumbnail",onclick="selectImage('target13.jpg', 'Image 13')" >
+        <img src="../public/images/target14.jpg" alt="image14", class = "thumbnail",onclick="selectImage('target14.jpg', 'Image 14')" >
+      </div>
+      <dotlottie-player src="https://lottie.host/ba082b39-8732-4d1a-8ccc-824b0af4bdbe/PFl4cwm6mL.json" background="transparent" speed="1" style="width: 100px; height: 100px; padding-bottom: 2px;" loop autoplay></dotlottie-player>
+    </section>
+    <section class="three">
+      <div class="contentarea">
+        <div class="camera"><video id="video">Video stream not available.</video></div>
+        <div><button id="playBtn">Open a camera</button><button id="startbutton">Take photo</button><span id="countdown"></span></div><canvas id="canvas"></canvas>
+        <div class="output"><img id="photo" alt="The screen capture will appear in this box." /></div>
+      </div>
+    </section>
+    <section class="four">
 
-  <script src="../public/javascripts/index.js"></script>
+    </section>
+  </div>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
 </body>
 </html>
