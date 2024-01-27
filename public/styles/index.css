@@ -1,97 +1,48 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    text-align: center;
-  }
-
-  h1 {
-    margin-bottom: 20px;
-  }
-
-  .thumbnail {
-    width: 100%;
-    max-width: 200px; /* Adjust as needed */
-    height: auto;
-    cursor: pointer;
-    margin: 5px;
-  }
-  .thumbnail:hover{
-    transform: scale(1.1);
-  }
-
-  .selected-target{
-    border: 1px solid red;
-    transform: scale(1.1);
-  }
-
-  #video {
-    border: 2px solid black;
-    width: 320px;
-    height: 240px;
-}
-#photo {
-    border: 2px solid black;
-    width: 320px;
-    height: 240px;
-}
-#canvas {
-    display: none;
-}
-.camera {
-    width: 340px;
-    display: inline-block;
-}
-.output {
-    width: 340px;
-    padding-top: 20px;
-    display: inline-block;
-}
-#startbutton {
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    bottom: -5px;
-    padding: 15px;
-    background-color: #8481da;
-    border: 1px solid rgba(0, 0, 0, 0.7);
-    font-size: 14px;
-    color: rgba(255, 255, 255, 1.0);
-    cursor: pointer;
-}
-#downloadbutton {
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    bottom: -10px;
-    padding: 18px;
-    background-color: #4caf50;
-    border: 1px solid rgba(0, 0, 0, 0.7);
-    font-size: 14px;
-    color: rgba(255, 255, 255, 1.0);
-    cursor: pointer;
-}
-.contentarea {
-    font-size: 16px;
-    font-family: Arial;
-    text-align: center;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-  @media (min-width: 600px) {
-    .thumbnail {
-      width: 30%; /* 3 images per row on larger screens */
-    }
-  }
+#introSection {
+  position: relative;
+  height: 100vh; /* 100% of the viewport height */
+  overflow: scroll;
+}
 
-  @media (min-width: 900px) {
-    .thumbnail {
-      width: 48%; /* 2 images per row on larger screens */
-    }
-  }
+#introSection video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+}
 
-  @media (min-width: 1200px) {
-    .thumbnail {
-      width: 30%; /* 3 images per row on larger screens */
-    }
-  }
+#logosContainer {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+/* Add styling for other sections as needed */
+#selectCharacterSection,
+#takePhotoSection {
+  padding: 20px;
+}
+
+#targetImagesContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  width: 100px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  margin: 10px;
+}
+
+/* Add any additional styling for other elements as needed */

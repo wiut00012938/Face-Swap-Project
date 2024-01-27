@@ -6,29 +6,35 @@ html(lang='en')
     link(rel='stylesheet', href='/static/styles/index.css')
     title Face Swap App
   body
-    h1 Face Swap App
-    #targetImagesContainer
-      img.thumbnail(src='/static/images/target1.jpg', alt='Image 1', onclick="selectImage('/static/images/target1.jpg', 'Image 1')")
-      img.thumbnail(src='/static/images/target2.webp', alt='Image 2', onclick="selectImage('/static/images/target2.wepb','Image 2')")
-      img.thumbnail(src='/static/images/target3.jpg', alt='Image 3', onclick="selectImage('/static/images/target3.jpg','Image 3')")
-      img.thumbnail(src='/static/images/target4.jpg', alt='Image 4', onclick="selectImage('/static/images/target4.jpg','Image 4')")
-      img.thumbnail(src='/static/images/target5.jpg', alt='Image 5', onclick="selectImage('/static/images/target5.jpg','Image 5')")
-      img.thumbnail(src='/static/images/target6.jpg', alt='Image 6', onclick="selectImage('/static/images/target6.jpg','Image 6')")
-    //button#playBtn Play stream
-    //button#stopBtn Stop stream
-    //button#captureBtn Capture
-    //<canvas id="canvas"></canvas> <video id="player" autoplay></video>
-    .contentarea
-      .camera
-        video#video Video stream not available.
+    // Case 1: Intro Video with Logos
+    section#introSection
+      video(width='100%', controls)
+        source(src='/static/images/IntroImage.mp4', type='video/mp4')
+
+      #logosContainer
+        img(src='logo1.png', alt='Logo 1')
+        img(src='logo2.png', alt='Logo 2')
+
+    // Case 2: Select Character for Swap
+    section#selectCharacterSection
+      h1 Select the character for swap
+      #targetImagesContainer
+        img.thumbnail(src='/static/images/target1.jpg', alt='Image 1', onclick="selectImage('/static/images/target1.jpg', 'Image 1')")
+        img.thumbnail(src='/static/images/target2.webp', alt='Image 2', onclick="selectImage('/static/images/target2.wepb','Image 2')")
+        img.thumbnail(src='/static/images/target3.jpg', alt='Image 3', onclick="selectImage('/static/images/target3.jpg','Image 3')")
+        img.thumbnail(src='/static/images/target4.jpg', alt='Image 4', onclick="selectImage('/static/images/target4.jpg','Image 4')")
+        img.thumbnail(src='/static/images/target5.jpg', alt='Image 5', onclick="selectImage('/static/images/target5.jpg','Image 5')")
+        img.thumbnail(src='/static/images/target6.jpg', alt='Image 6', onclick="selectImage('/static/images/target6.jpg','Image 6')")
+
+    // Case 3: Take a Photo
+    section#takePhotoSection(style='display: none;')
+      button(onclick='enableCamera()') Take a Photo
+      #loadingGif(style='display: none;')
+        img(src='loading.gif', alt='Loading')
+      img#swappedImage(alt='Swapped Image', style='display: none;')
       div
-        button#playBtn Open a camera
-        button#startbutton Take photo
-        span#countdown
-      canvas#canvas
-      .output
-        img#photo(alt='The screen capture will appear in this box.')
-    button#generateButton Swap Faces
-    img#resultImage(alt='Swapped Image')
+        button(onclick='dropImage()') Drop
+        button(onclick='exportImage()') Export
+
+    // Other Elements
     script(src='/static/javascripts/index.js')
-    script(src='/static/javascripts/imageGenerator.js')
