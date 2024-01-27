@@ -189,3 +189,30 @@ document.getElementById("generateButton").addEventListener("click", async () => 
 	document.getElementById("resultImage").src = generatedImageUrl;
 
 })
+
+window.addEventListener('beforeunload', function () {
+    // Call your cleanup function here
+	if (photo.src){
+		deletePhotoOnServer(photo.src);
+	}
+});
+
+function deletePhotoOnServer(photoUrl) {
+    fetch('/deletePhoto', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: photoUrl }),
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Photo deleted successfully on the server');
+        } else {
+            console.error('Failed to delete photo on the server');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}

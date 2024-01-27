@@ -102,3 +102,19 @@ app.post('/upload', upload.single('image'), (req, res) => {
 
   res.json({ success: true, imagePath: `/static/images/${photoName}` });
 });
+
+app.delete('/deletePhoto', (req, res) => {
+    const photoUrl = req.body.url;
+    const photoPath = path.join(__dirname, 'public', 'images', path.basename(photoUrl));
+
+    // Delete the photo on the server
+    fs.unlink(photoPath, (err) => {
+        if (err) {
+            console.error('Error deleting photo:', err);
+            res.status(500).json({ success: false, error: 'Failed to delete photo on the server' });
+        } else {
+            console.log('Photo deleted successfully on the server');
+            res.json({ success: true });
+        }
+    });
+});
