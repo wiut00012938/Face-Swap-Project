@@ -216,7 +216,7 @@ document.getElementById("generateButton").addEventListener("click", async () => 
 
 	if (generatedImageUrl){
 		document.getElementById("resultImage").src = generatedImageUrl;
-		document.getElementById("load-animation").style.display = none;
+		document.getElementById("load-animation").style.display = 'none';
 		document.getElementById("resultImage").style.display = 'block'
 		document.getElementById("options").style.display = 'flex'
 	}
