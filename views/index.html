@@ -45,12 +45,25 @@
     <section class="three">
       <div class="contentarea">
         <div class="camera"><video id="video">Video stream not available.</video></div>
-        <div><button id="playBtn">Open a camera</button><button id="startbutton">Take photo</button><span id="countdown"></span></div><canvas id="canvas"></canvas>
-        <div class="output"><img id="photo" alt="The screen capture will appear in this box." /></div>
+        <div>
+          <button id="playBtn">Open a camera</button>
+          <button id="startbutton">Take photo</button>
+          <span id="countdown"></span>
+        </div>
+          <canvas id="canvas"></canvas>
+        <div class="output">
+          <img id="photo" alt="The screen capture will appear in this box." />
+        </div>
       </div>
+      <button id="generateButton">Swap Faces</button>
     </section>
     <section class="four">
-
+      <img src="../public/images/Loading.gif" alt="loading">
+      <img src="" alt="Swapped Image" id="resultImage">
+      <div>
+        <button id="finish">Finish</button>
+        <button id = "export">Export the Image</button>
+      </div>
     </section>
   </div>
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 

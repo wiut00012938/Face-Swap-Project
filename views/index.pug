@@ -6,29 +6,61 @@ html(lang='en')
     link(rel='stylesheet', href='/static/styles/index.css')
     title Face Swap App
   body
-    h1 Face Swap App
-    #targetImagesContainer
-      img.thumbnail(src='/static/images/target1.jpg', alt='Image 1', onclick="selectImage('target1.jpg', 'Image 1')")
-      img.thumbnail(src='/static/images/target2.webp', alt='Image 2', onclick="selectImage('target2.wepb','Image 2')")
-      img.thumbnail(src='/static/images/target3.jpg', alt='Image 3', onclick="selectImage('target3.jpg','Image 3')")
-      img.thumbnail(src='/static/images/target4.jpg', alt='Image 4', onclick="selectImage('target4.jpg','Image 4')")
-      img.thumbnail(src='/static/images/target5.jpg', alt='Image 5', onclick="selectImage('target5.jpg','Image 5')")
-      img.thumbnail(src='/static/images/target6.jpg', alt='Image 6', onclick="selectImage('target6.jpg','Image 6')")
-    //button#playBtn Play stream
-    //button#stopBtn Stop stream
-    //button#captureBtn Capture
-    //<canvas id="canvas"></canvas> <video id="player" autoplay></video>
-    .contentarea
-      .camera
-        video#video Video stream not available.
-      div
-        button#playBtn Open a camera
-        button#startbutton Take photo
-        span#countdown
-      canvas#canvas
-      .output
-        img#photo(alt='The screen capture will appear in this box.')
-    button#generateButton Swap Faces
-    img#resultImage(alt='Swapped Image')
+    .container
+      section.one
+        video.back-desktop(autoplay='', loop='', muted='', plays-inline='')
+          source(src='/static/images/intro_desktop.mp4', type='video/mp4')
+        nav
+          a(href='ggi-uzbekistan.onrender.com')
+            img(src='/static/images/team_logo_black.png', alt='team_logo')
+          a(href='https://lrc.wiut.uz/readingClub/Index') Book Club
+        .intro_text
+          p.text1 Face Swap App
+          p.text2 Get the image of yourself as one of the characters
+        dotlottie-player(src='https://lottie.host/ba082b39-8732-4d1a-8ccc-824b0af4bdbe/PFl4cwm6mL.json', background='transparent', speed='1', style='width: 10rem; height: 10rem; padding-bottom: 2px;', loop='', autoplay='')
+      section.two
+        h1 Choose The Character for Swap
+        .target-image_options
+          img.thumbnail(src='/static/images/target1.jpg', alt='image1' ,onclick="selectImage('target1.jpg', 'Image 1')")
+          img.thumbnail(src='/static/images/target2.jpg', alt='image2', onclick="selectImage('target2.jpg', 'Image 2')")
+          img.thumbnail(src='/static/images/target3.jpg', alt='image3',onclick="selectImage('target3.jpg', 'Image 3')")
+          img.thumbnail(src='/static/images/target4.jpg', alt='image4',onclick="selectImage('target4.jpg', 'Image 4')")
+          img.thumbnail(src='/static/images/target5.jpg', alt='image5',onclick="selectImage('target5.jpg', 'Image 5')")
+          img.thumbnail(src='/static/images/target6.jpg', alt='image6',onclick="selectImage('target6.jpg', 'Image 6')")
+          img.thumbnail(src='/static/images/target7.jpg', alt='image7',onclick="selectImage('target7.pg', 'Image 7')")
+          img.thumbnail(src='/static/images/target8.jpg', alt='image8',onclick="selectImage('target8.jpg', 'Image 8')")
+          img.thumbnail(src='/static/images/target9.jpg', alt='image9',onclick="selectImage('target9.jpg', 'Image 9')")
+          img.thumbnail(src='/static/images/target10.jpg', alt='image10',onclick="selectImage('target10.jpg', 'Image 10')")
+          img.thumbnail(src='/static/images/target11.jpg', alt='image11',onclick="selectImage('target11.jpg', 'Image 11')")
+          img.thumbnail(src='/static/images/target12.jpg', alt='image12',onclick="selectImage('target12.jpg', 'Image 12')")
+          img.thumbnail(src='/static/images/target13.jpg', alt='image13',onclick="selectImage('target13.jpg', 'Image 13')")
+          img.thumbnail(src='/static/images/target14.jpg', alt='image14',onclick="selectImage('target14.jpg', 'Image 14')")
+        dotlottie-player(src='https://lottie.host/ba082b39-8732-4d1a-8ccc-824b0af4bdbe/PFl4cwm6mL.json', background='transparent', speed='1', style='width: 100px; height: 100px; padding-bottom: 2px;', loop='', autoplay='')
+      section.three
+        h1 Take a foto
+        .contentarea
+          button#playBtn Open a camera
+          .camera
+            video#video Video stream not available.
+            button#startbutton Take photo
+            span#countdown
+          canvas#canvas
+          .output
+            button#retake Take a picture again
+            img#photo(alt='The screen capture will appear in this box.')
+        button#generateButton Swap Faces
+      section.four#section4
+        h1 Result
+        img.loading#load-animation(src='/static/images/Loading.gif', alt='loading')
+        img#resultImage(alt='Swapped Image' src = '/static/images/target12.jpg')
+        div.action_options#options
+          button#finish Finish
+          button#export Export the Image
+        #qrOverlay(style='display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7);')
+          #qrContainer(style='position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff;')
+            img#qrCodeImage(alt='QR Code')
+            br
+            button#doneButton Done
+    script(src='https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs', type='module')
     script(src='/static/javascripts/index.js')
     script(src='/static/javascripts/imageGenerator.js')

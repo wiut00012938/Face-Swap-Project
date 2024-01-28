@@ -1,58 +1,59 @@
 
 (function() {
-	var width = 320;
-	var height = 0;
+    var streaming = false;
+    var video = null;
+    var canvas = null;
+    var photo = null;
+    var startbutton = null;
+    var countdownDisplay = null;
+    var playBtn = document.getElementById('playBtn');
 
-	var streaming = false;
+    function startup() {
+        video = document.getElementById('video');
+        canvas = document.getElementById('canvas');
+        photo = document.getElementById('photo');
+        startbutton = document.getElementById('startbutton');
+        countdownDisplay = document.getElementById('countdown');
+		startbutton.style.display = "block"
+		playBtn.style.display = "none"
+        navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+            })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function(err) {
+                console.log("An error occurred: " + err);
+            });
 
-	var video = null;
-	var canvas = null;
-	var photo = null;
-	var startbutton = null;
-	var countdownDisplay = null;
-	var playBtn = document.getElementById('playBtn');
-	function startup() 
-	{
-		video = document.getElementById('video');
-		canvas = document.getElementById('canvas');
-		photo = document.getElementById('photo');
-		startbutton = document.getElementById('startbutton');
-		countdownDisplay = document.getElementById('countdown');
-		navigator.mediaDevices.getUserMedia({
-				video: true,
-				audio: false
-			})
-			.then(function(stream) {
-				video.srcObject = stream;
-				video.play();
-			})
-			.catch(function(err) {
-				console.log("An error occurred: " + err);
-			});
+        video.addEventListener('canplay', function(ev) {
+            if (!streaming) {
+                // Use the parent div's dimensions
+                var parentDiv = video.parentElement;
+                var parentWidth = parentDiv.offsetWidth;
+                var parentHeight = parentDiv.offsetHeight;
 
-		video.addEventListener('canplay', function(ev) {
-			if (!streaming) {
-				height = video.videoHeight / (video.videoWidth / width);
+                // Set video dimensions dynamically
+                video.setAttribute('width', parentWidth);
+                video.setAttribute('height', parentHeight);
 
-				if (isNaN(height)) {
-					height = width / (4 / 3);
-				}
+                // Set canvas dimensions dynamically
+                canvas.setAttribute('width', parentWidth);
+                canvas.setAttribute('height', parentHeight);
 
-				video.setAttribute('width', width);
-				video.setAttribute('height', height);
-				canvas.setAttribute('width', width);
-				canvas.setAttribute('height', height);
-				streaming = true;
-			}
-		}, false);
+                streaming = true;
+            }
+        }, false);
 
-		startbutton.addEventListener('click', function(ev) {
-			countdownAndCapture();
-			ev.preventDefault();
-		}, false);
+        startbutton.addEventListener('click', function(ev) {
+            countdownAndCapture();
+            ev.preventDefault();
+        }, false);
 
-		clearphoto();
-	}
+        clearphoto();
+    }
 
 	function clearphoto() 
 	{
@@ -76,33 +77,51 @@
 			} else {
 				countdownDisplay.innerHTML = "";
 				takepicture();
+				toggleCameraOutput();
 			}
 		}
 
 		updateCountdown();
 	}
 
-	/*function takepicture() 
-	{
-		var context = canvas.getContext('2d');
-		if (width && height) {
-			canvas.width = width;
-			canvas.height = height;
-			context.drawImage(video, 0, 0, width, height);
-
-			var data = canvas.toDataURL('image/png');
-			photo.setAttribute('src', data);
-		} else {
-			clearphoto();
-		}
-	}*/
+	function toggleCameraOutput() {
+		var cameraElements = document.querySelectorAll('.camera');
+		var outputElements = document.querySelectorAll('.output');
+		var swapbutton = document.getElementById('generateButton');
+		cameraElements.forEach(function(element) {
+			element.style.display = 'none';
+		});
 	
+		outputElements.forEach(function(element) {
+			element.style.display = 'flex';
+		});
+		swapbutton.style.visibility = 'visible'
+	}
+	document.getElementById("retake").addEventListener("click", function () {
+		var cameraElements = document.querySelectorAll('.camera');
+		var outputElements = document.querySelectorAll('.output');
+		var swapbutton = document.getElementById('generateButton');
+		cameraElements.forEach(function(element) {
+			element.style.display = 'block';
+		});
+	
+		outputElements.forEach(function(element) {
+			element.style.display = 'none';
+		});
+		swapbutton.style.visibility = 'hidden'
+		deletePhotoOnServer(photo.src);
+
+	})
 	function takepicture() {
 		var context = canvas.getContext('2d');
-		if (width && height) {
-			canvas.width = width;
-			canvas.height = height;
-			context.drawImage(video, 0, 0, width, height);
+		var parentDiv = video.parentElement;
+		var parentWidth = parentDiv.offsetWidth;
+		var parentHeight = parentDiv.offsetHeight;
+	
+		if (parentWidth && parentHeight) {
+			canvas.width = parentWidth;
+			canvas.height = parentHeight;
+			context.drawImage(video, 0, 0, parentWidth, parentHeight);
 	
 			// Convert the canvas data to a Blob
 			canvas.toBlob(blob => {
@@ -115,17 +134,18 @@
 					method: 'POST',
 					body: formData,
 				})
-					.then(response => response.json())
-					.then(data => {
-						// Update the 'src' attribute of the 'photo' element with the saved image path
-						photo.setAttribute('src', data.imagePath);
-					})
-					.catch(error => console.error('Error:', error));
+				.then(response => response.json())
+				.then(data => {
+					// Update the 'src' attribute of the 'photo' element with the saved image path
+					photo.setAttribute('src', data.imagePath);
+				})
+				.catch(error => console.error('Error:', error));
 			}, 'image/png');
 		} else {
 			clearphoto();
 		}
 	}
+	
 	
 	
 	
@@ -137,7 +157,13 @@
 
 
 
+var restartButton = document.getElementById('finish');
 
+// Add an event listener to the button
+restartButton.addEventListener('click', function() {
+    // Reload the website when the button is clicked
+    window.location.reload();
+});
 
 
 
@@ -169,8 +195,10 @@ console.log('New link:', 'https://book-club-2og7.onrender.com/static/images/' + 
 //calling image generator
 document.getElementById("generateButton").addEventListener("click", async () => {
 	const SwapImage = document.getElementById('photo').src
-	console.log(SwapImage)
 	const targetImage = "https://book-club-2og7.onrender.com/static/images/" + Target_Image
+
+    var section4 = document.getElementById('section4');
+	section4.scrollIntoView({ behavior: 'smooth' });
 	await fetch("/setImages", {
 		method: "POST",
 		headers: {
@@ -188,6 +216,9 @@ document.getElementById("generateButton").addEventListener("click", async () => 
 
 	if (generatedImageUrl){
 		document.getElementById("resultImage").src = generatedImageUrl;
+		document.getElementById("load-animation").style.display = none;
+		document.getElementById("resultImage").style.display = 'block'
+		document.getElementById("options").style.display = 'flex'
 	}
 	else{
 		window.alert("Swap and target images are required.")
@@ -197,7 +228,7 @@ document.getElementById("generateButton").addEventListener("click", async () => 
 
 window.addEventListener('beforeunload', function () {
     // Call your cleanup function here
-	if (photo.src){
+	if (photo !== null){
 		deletePhotoOnServer(photo.src);
 	}
 });
@@ -221,3 +252,31 @@ function deletePhotoOnServer(photoUrl) {
         console.error('Error:', error);
     });
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var exportButton = document.getElementById('export');
+    var qrOverlay = document.getElementById('qrOverlay');
+    var qrCodeImage = document.getElementById('qrCodeImage');
+    var doneButton = document.getElementById('doneButton');
+    var resultImage = document.getElementById('resultImage');
+
+    exportButton.addEventListener('click', function () {
+        // Get the src URL of the result image
+        var imageUrl = resultImage.src;
+
+        // Generate the QR code using Google Charts API
+        var qrCodeUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=' + encodeURIComponent(imageUrl);
+
+        // Set the QR code image source
+        qrCodeImage.src = qrCodeUrl;
+
+        // Show the overlay
+        qrOverlay.style.display = 'block';
+    });
+
+    doneButton.addEventListener('click', function () {
+        // Hide the overlay when "Done" is clicked
+        qrOverlay.style.display = 'none';
+    });
+});
