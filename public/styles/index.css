@@ -94,22 +94,6 @@ nav a{
     }
   
 }
-
-
-
-
-@media (min-aspect-ration: 16/9){
-  .back-desktop{
-    width: 100%;
-    height: auto;
-  }
-}
-@media (max-aspect-ration: 16/9){
-  .back-desktop{
-    width: auto;
-    height: 100%;
-  }
-}
 .two{
     background-image: url(../images/background_desktop.jpg);
     background-size:cover;
@@ -303,3 +287,22 @@ nav a{
 #qrCodeImage{
   width: 30rem;
 }
+
+@media (min-aspect-ratio: 16/9){
+  .back-desktop{
+    width: 100%;
+    height: auto;
+  }
+}
+@media (max-aspect-ratio: 16/9){
+  .back-desktop{
+    top: 50%;
+    width: 100%;
+    height: auto;
+  }
+  .two, .three, .four{
+    background-image: url(../images/background_mobile.jpg);
+    background-position: center;
+  }
+}
+
